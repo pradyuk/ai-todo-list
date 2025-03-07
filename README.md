@@ -39,3 +39,8 @@ Admin URL:
 ```
 http://localhost:8000/admin/
 ```
+
+Run eval script (make sure the agent is not running):
+```
+./manage.py eval
+```
