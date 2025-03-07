@@ -38,12 +38,12 @@ class TaskSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         """
-        Assign new tasks to an AI employee by default.
+        Assign new tasks to a human employee by default.
         """
-        ai_employee = Employee.objects.filter(employee_type="ai").first()
+        human_employee = Employee.objects.filter(employee_type="human").first()
 
-        if not ai_employee:
-            raise serializers.ValidationError({"assigned_to": "No AI employee found"})
+        if not human_employee:
+            raise serializers.ValidationError({"assigned_to": "No Human employee found"})
 
-        validated_data["assigned_to"] = ai_employee
+        validated_data["assigned_to"] = human_employee
         return super().create(validated_data)
