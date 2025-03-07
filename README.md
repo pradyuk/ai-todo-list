@@ -27,7 +27,7 @@ npm run dev
 
 Run task accomplishing agent:
 ```
-./manage.py accomplish_task
+./manage.py agent
 ```
 
 Frontend URL:
