@@ -8,6 +8,7 @@ cd ..
 ```
 
 Run backend:
+First update the .env file with the OpenAPI key
 ```
 ./manage.py migrate
 ./manage.py runserver
@@ -26,7 +27,7 @@ npm run dev
 
 Run task accomplishing agent:
 ```
-./manage.py accomplish_task
+./manage.py agent
 ```
 
 Frontend URL:
@@ -37,4 +38,9 @@ http://localhost:5173/
 Admin URL:
 ```
 http://localhost:8000/admin/
+```
+
+Run eval script (make sure the agent is not running):
+```
+./manage.py eval
 ```
