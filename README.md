@@ -8,6 +8,7 @@ cd ..
 ```
 
 Run backend:
+First update the .env file with the OpenAPI key
 ```
 ./manage.py migrate
 ./manage.py runserver
