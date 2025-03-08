@@ -19,7 +19,7 @@ def get_all_tasks():
 def take_action_against_task(task, category):
     human = Employee.objects.filter(employee_type="human").first()
 
-    if category == "Services":
+    if category == "Service Email":
         task.comments.create(
             employee=task.assigned_to,
             content="Email sent with services information",
@@ -27,7 +27,7 @@ def take_action_against_task(task, category):
         task.completed = True
         task.save()
 
-    elif category == "Pricing":
+    elif category == "Pricing Email":
         task.comments.create(
             employee=task.assigned_to,
             content="Email sent with pricing information",

@@ -18,6 +18,24 @@ export default function TodoList() {
   const [editingComment, setEditingComment] = useState({});
   const [editCommentText, setEditCommentText] = useState("");
   const [showComments, setShowComments] = useState({}); // Track which tasks have comments visible
+  const [employees, setEmployees] = useState([]);
+  const [selectedEmployee, setSelectedEmployee] = useState("");
+
+
+  useEffect(() => {
+    const fetchEmployees = async () => {
+      try {
+        const response = await axios.get(EMPLOYEE_API_URL);
+        setEmployees(response.data);
+      } catch (error) {
+        console.error("Error fetching employees:", error);
+      }
+    };
+
+    fetchEmployees();
+  }, []);
+
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -54,14 +72,22 @@ export default function TodoList() {
   };
 
   const handleAddTask = async () => {
-    if (!newTask.trim()) return;
+    if (!newTask.trim() || !selectedEmployee) return;
+
     try {
-      await axios.post(API_URL, { title: newTask, completed: false });
+      await axios.post(API_URL, {
+        title: newTask,
+        completed: false,
+        assigned_to_id: selectedEmployee,
+      });
+
       setNewTask("");
+      setSelectedEmployee("");
     } catch (error) {
       console.error("Error adding task:", error);
     }
   };
+
 
   const handleDeleteTask = async (taskId) => {
     try {
@@ -131,10 +157,26 @@ export default function TodoList() {
             placeholder="Enter new task"
             style={styles.input}
           />
+
+          {/* Employee Drop-down */}
+          <select
+            value={selectedEmployee}
+            onChange={(e) => setSelectedEmployee(e.target.value)}
+            style={styles.select}
+          >
+            <option value="">Select Employee</option>
+            {employees.map((employee) => (
+              <option key={employee.id} value={employee.id}>
+                {employee.name}
+              </option>
+            ))}
+          </select>
+
           <button onClick={handleAddTask} style={styles.button}>
             <FaPlus /> Add Task
           </button>
         </div>
+
 
         <ul style={styles.taskList}>
           {tasks.map((task) => (

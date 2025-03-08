@@ -15,18 +15,34 @@ load_dotenv()
 
 client = openai.Client()
 client.api_key = os.getenv("OPENAI_API_KEY")
-print("key",client.api_key)
 
 
 def assign_category_to_task(task):
     prompt = """
-    Your task is to assign a category to a task. Here are the categories:
-    - Services
-    - Pricing
+    You are a helpful AI chatbot posing as a handyman's receptionist.
+    Your job is to assign category to a task. Here are the rules:
+
+    - if the task is about sending email with services information, assign Service Email
+    - if the task can be completed by sending services information, assign Service Email
+    - if the task is about sending email with pricing information, assign Pricing Email
+    - if the task can be completed by sending pricing information, assign Pricing Email
+    - if the task is about scheduling visit, assign Schedule Visit
+    - if the task can be completed by scheduling a visit, assign Schedule Visit
+    - if the task is about visiting customer, assign Visit
+    - if the task can be completed by visiting a customer, assign Visit
+    - if the task is about scheduling meeting, assign Schedule Meeting
+    - if the task can be completed by scheduling a meeting, assign Schedule Meeting
+    - if the task is about talking to customer, assign Talk
+    - if the task can be completed by talking to a customer, assign Talk
+
+    Do not explain yourself. Your answer should only be from the following list:
+    - Service Email
+    - Pricing Email
     - Schedule Visit
     - Visit
     - Schedule Meeting
     - Talk
+    - Uncategorized
     """
     messages = [
         {

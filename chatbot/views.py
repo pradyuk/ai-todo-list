@@ -14,13 +14,6 @@ load_dotenv()
 client = openai.Client()
 client.api_key = os.getenv("OPENAI_API_KEY")
 
-TASK_LIST = [
-    "Schedule a meeting",
-    "Send an email",
-    "Send a quotation",
-    "Reset cable router remotely",
-]
-
 
 def get_chat_response(conversation):
     content = (
@@ -44,7 +37,7 @@ def get_chat_response(conversation):
 def get_task(conversation, tasks):
     task_list = "\n".join(tasks)
     prompt = f"""
-    You are a helpful AI chatbot posing as a handyman's receptionist. Your job
+    You are a helpful AI chatbot posing as a handyman's receptionist.
     Your job is to categorize the message of the customer. Here are the
     categories:
     - Services

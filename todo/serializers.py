@@ -22,6 +22,9 @@ class CommentSerializer(serializers.ModelSerializer):
 class TaskSerializer(serializers.ModelSerializer):
     assigned_to = EmployeeSerializer(read_only=True)
     comments = CommentSerializer(many=True, read_only=True)
+    assigned_to_id = serializers.PrimaryKeyRelatedField(
+        queryset=Employee.objects.all(), source="assigned_to", write_only=True
+    )
 
     class Meta:
         model = Task
@@ -35,15 +38,3 @@ class TaskSerializer(serializers.ModelSerializer):
             "created_at",
             "comments",
         ]
-
-    def create(self, validated_data):
-        """
-        Assign new tasks to an AI employee by default.
-        """
-        ai_employee = Employee.objects.filter(employee_type="ai").first()
-
-        if not ai_employee:
-            raise serializers.ValidationError({"assigned_to": "No AI employee found"})
-
-        validated_data["assigned_to"] = ai_employee
-        return super().create(validated_data)
